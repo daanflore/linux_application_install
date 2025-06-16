@@ -11,7 +11,6 @@ get_input() {
     local prompt="$1"
     local default="$2"
     local input=""
-    TEST123=2
     # Show prompt with default value if provihed
     if [ -n "$default" ]; then
         printf "%s [%s]: " "$prompt" "$default"
@@ -151,21 +150,13 @@ find "$TEMPLATE_DIR" -type f | sort | while read -r template_file; do
         dest_file="$APP_DIR/$filename"
         echo "Processing special file: $filename -> $dest_file"
         cp "$template_file" "$dest_file"
-        
+
         # Update variables in the script by directly writing to a temp file
         echo "  - Setting APP_NAME to $APP_NAME"
-        temp_file=$(mktemp)
-        while IFS= read -r line; do
-            if [[ "$line" == "APP_NAME=" ]]; then
-                echo "APP_NAME=$APP_NAME" >> "$temp_file"
-            elif [[ "$line" == "REPO_NAME=" ]]; then
-                echo "REPO_NAME=$REPO_NAME" >> "$temp_file"
-            else
-                echo "$line" >> "$temp_file"
-            fi
-        done < "$dest_file"
-        mv "$temp_file" "$dest_file"
+        sed -i "s/APP_PLACEHOLDER/\"$APP_NAME\"/g" "$dest_file"
+        
         echo "  - Setting REPO_NAME to $REPO_NAME"
+        sed -i "s%REPO_PLACEHOLDER%\"${REPO_NAME}\"%g" "$dest_file"
         
         # Make it executable
         echo "  - Making script executable"

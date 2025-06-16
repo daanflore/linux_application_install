@@ -3,8 +3,8 @@
 set -e
 
 BIN_DIR=~/.local/bin
-APP_NAME=
-REPO_NAME=
+APP_NAME=APP_PLACEHOLDER
+REPO_NAME=REPO_PLACEHOLDER
 [[ -d $BIN_DIR ]] || mkdir -p $BIN_DIR
 
 DIR=$(dirname "$(readlink -f "$0")")
