@@ -121,8 +121,8 @@ echo "Creating application directory: $APP_DIR"
 # Check if app directory already exists
 if [ -d "$APP_DIR" ]; then
     echo "Warning: Directory $APP_DIR already exists."
-    echo -n "Do you want to overwrite it? [y/N]: "
-    read OVERWRITE
+    read -p "Do you want to overwrite the existing directory? [Y/n]" -r OVERWRITE
+
     if [[ ! "$OVERWRITE" =~ ^[Yy](es)?$ ]]; then
         echo "Operation cancelled by user."
         exit 0
