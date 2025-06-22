@@ -13,6 +13,14 @@ curl -s curl -s https://api.github.com/repos/"$REPO_NAME"/releases/latest | grep
 
 chmod +x $BIN_DIR/$APP_NAME
 
+if [[ ! -d ~/.local/share/applications ]]; then
+    mkdir -p ~/.local/share/applications
+fi
+
+if [[ ! -d ~/.local/share/icons ]]; then
+    mkdir -p ~/.local/share/icons
+fi
+
 cp "$DIR"/"$APP_NAME".desktop ~/.local/share/applications/"$APP_NAME".desktop
 cp "$DIR"/"$APP_NAME".svg ~/.local/share/icons/"$APP_NAME".svg
 
